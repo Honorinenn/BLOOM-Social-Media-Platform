@@ -1,0 +1,59 @@
+version: '3.8'
+
+services:
+  frontend:
+    build: ./frontend
+    ports:
+      - "3000:3000"
+    environment:
+      - REACT_APP_API_URL=http://localhost:5000
+  
+  auth_service:
+    build: ./backend/auth_service
+    ports:
+      - "5001:5001"
+    environment:
+      - SECRET_KEY=${SECRET_KEY}
+    depends_on:
+      - database
+
+  user_service:
+    build: ./backend/user_service
+    ports:
+      - "5002:5002"
+    depends_on:
+      - database
+
+  post_service:
+    build: ./backend/post_service
+    ports:
+      - "5003:5003"
+    depends_on:
+      - database
+
+  follow_service:
+    build: ./backend/follow_service
+    ports:
+      - "5004:5004"
+    depends_on:
+      - database
+
+  api_gateway:
+    build: ./backend/api_gateway
+    ports:
+      - "5000:5000"
+    depends_on:
+      - auth_service
+      - user_service
+      - post_service
+      - follow_service
+
+  database:
+    image: mysql:8
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: social_media
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./database/db_init.sql:/docker-entrypoint-initdb.d/db_init.sql
