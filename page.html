@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>React Sign-In & Account Creation</title>
+</head>
+<body>
+    <div id="root"></div>
+    <script>
+        // React Application
+        const { useState } = React;
+
+        function App() {
+            const [currentPage, setCurrentPage] = useState('SignIn');
+
+            const renderPage = () => {
+                switch (currentPage) {
+                    case 'SignIn':
+                        return <SignInPage goToNextPage={() => setCurrentPage('TwoStepVerification')} />;
+                    case 'TwoStepVerification':
+                        return <TwoStepVerificationPage goToNextPage={() => setCurrentPage('SignInSuccess')} />;
+                    case 'SignInSuccess':
+                        return <SignInSuccessPage />;
+                    default:
+                        return <SignInPage goToNextPage={() => setCurrentPage('TwoStepVerification')} />;
+                }
+            };
+
+            return <div>{renderPage()}</div>;
+        }
+
+        function SignInPage({ goToNextPage }) {
+            return (
+                <div className="container">
+                    <h1>Sign in to your account</h1>
+                    <input type="text" placeholder="Email" required />
+                    <input type="password" placeholder="Password" required />
+                    <div className="link">
+                        <a href="#">Forgot password?</a>
+                    </div>
+                    <button onClick={goToNextPage}>Sign in</button>
+                    <div className="link">
+                        Not a member? <a href="#">Create account</a>
+                    </div>
+                    <div className="link">
+                        <a href="#">Terms of Use</a> | <a href="#">Privacy Policy</a>
+                    </div>
+                </div>
+            );
+        }
+
+        function TwoStepVerificationPage({ goToNextPage }) {
+            return (
+                <div className="container">
+                    <h1>2-step verification</h1>
+                    <p>Enter the one-time code</p>
+                    <p>2-step verification has been enabled for this account. Please enter the one-time code sent to your authenticator app linked.</p>
+                    <div className="verification-inputs">
+                        {[...Array(6)].map((_, index) => (
+                            <input key={index} type="text" maxLength="1" />
+                        ))}
+                    </div>
+                    <p><a href="#">Try another method to verify</a></p>
+                    <button onClick={goToNextPage}>Verify</button>
+                </div>
+            );
+        }
+
+        function SignInSuccessPage() {
+            return (
+                <div className="container">
+                    <h1>Sign-in Successful!</h1>
+                    <p className="success-message">You have signed in successfully.</p>
+                </div>
+            );
+        }
+
+        ReactDOM.render(<App />, document.getElementById('root'));
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/17.0.2/umd/react.production.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/17.0.2/umd/react-dom.production.min.js"></script>
+</body>
+</html>

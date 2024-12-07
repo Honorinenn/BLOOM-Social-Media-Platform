@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account Creation Flow</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #443c5c;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            width: 400px;
+            background: white;
+            border-radius: 16px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .container h1 {
+            font-size: 20px;
+            margin-bottom: 16px;
+            color: #191c1d;
+        }
+
+        .container p {
+            font-size: 14px;
+            color: #747778;
+            margin-bottom: 24px;
+        }
+
+        input[type="text"], input[type="password"] {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 16px;
+            border: 1px solid #dcdcdc;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+
+        .checkbox-container {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .checkbox-container label {
+            font-size: 12px;
+            color: #747778;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background: #5d34f2;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #4b29c4;
+        }
+
+        .link {
+            font-size: 14px;
+            color: #5d34f2;
+            margin-top: 16px;
+        }
+
+        .link a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .step {
+            display: none;
+        }
+
+        .step.active {
+            display: block;
+        }
+
+        .verification-inputs {
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+        }
+
+        .verification-inputs input {
+            width: 40px;
+            height: 40px;
+            text-align: center;
+            border: 1px solid #dcdcdc;
+            border-radius: 8px;
+        }
+
+        .success-message {
+            color: green;
+            font-size: 16px;
+            margin-top: 16px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div id="step-1" class="step active">
+            <h1>Create your account</h1>
+            <input type="text" placeholder="Email" required>
+            <div class="checkbox-container">
+                <input type="checkbox" id="terms">
+                <label for="terms">I have read and agree to our <a href="#">Terms of Use</a> and <a href="#">Privacy Policy</a>.</label>
+            </div>
+            <button onclick="nextStep(2)">Create account</button>
+            <div class="link">
+                Already have an account? <a href="#">Sign in</a>
+            </div>
+        </div>
+
+        <div id="step-2" class="step">
+            <h1>Enter verification code</h1>
+            <p>The verification code has been sent to your email <strong>Jason0123@gmail.com</strong>.</p>
+            <div class="verification-inputs">
+                <input type="text" maxlength="1">
+                <input type="text" maxlength="1">
+                <input type="text" maxlength="1">
+                <input type="text" maxlength="1">
+                <input type="text" maxlength="1">
+                <input type="text" maxlength="1">
+            </div>
+            <p>Not received yet? Resend after 59 seconds.</p>
+            <button onclick="nextStep(3)">Continue</button>
+        </div>
+
+        <div id="step-3" class="step">
+            <h1>Set password</h1>
+            <p>Password requires a minimum of 8 characters and contains a mix of letters, numbers, and symbols.</p>
+            <input type="password" placeholder="Password" required>
+            <button onclick="nextStep(4)">Continue</button>
+        </div>
+
+        <div id="step-4" class="step">
+            <h1>Account Created Successfully!</h1>
+            <p class="success-message">Your account has been created successfully.</p>
+        </div>
+    </div>
+
+    <script>
+        function nextStep(step) {
+            const steps = document.querySelectorAll('.step');
+            steps.forEach((el) => el.classList.remove('active'));
+            document.getElementById(`step-${step}`).classList.add('active');
+        }
+    </script>
+</body>
+</html>
