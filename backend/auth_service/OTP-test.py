@@ -71,7 +71,7 @@ def verify_otp(user_otp, generated_otp, start_time):
 # Main script
 if __name__ == "__main__":
     # Configuration
-    sender_email = "jamesle021198@gmail.com"
+    sender_email = ""
     sender_password = "bxsx lfyr kihn dpqs"  # Use an app password if necessary
     recipient_email = input("Enter your email address: ")
 
@@ -88,3 +88,4 @@ if __name__ == "__main__":
         print("Login successful!")
     else:
         print("Invalid OTP or OTP expired. Please try again.")
+
